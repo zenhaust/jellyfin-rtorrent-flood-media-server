@@ -1,0 +1,5 @@
+import=/home/rtorrent/rtorrent/config.d/00-main.rc
+import=/home/rtorrent/rtorrent/config.d/01-log.rc
+import=/home/rtorrent/rtorrent/config.d/02-move_on_completion.rc
+import=/home/rtorrent/rtorrent/config.d/05-dht.rc
+import=/home/rtorrent/rtorrent/config.d/05-xmlrpc.rc
