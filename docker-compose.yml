@@ -14,12 +14,12 @@ services:
       - ./media/Musica:/data/music
       - ./media/Cine:/data/movies
       - ./media/IPTV:/data/iptv
-#      - /opt/vc/lib:/opt/vc/lib #optional
+      - /opt/vc/lib:/opt/vc/lib #optional
     ports:
       - 8096:8096
       - 8920:8920 #optional
-        #    devices:
-        #      - /dev/dri:/dev/dri #optional
+    devices:
+      - /dev/dri:/dev/dri #optional
     restart: unless-stopped
 
   rtorrent:
@@ -46,9 +46,6 @@ services:
 
   flood:
     image: jesec/flood
-    #build:
-    #  context: ./containers/flood
-    #  dockerfile: Dockerfile.flood
     container_name: media-system-flood
     ports:
       - 0.0.0.0:3001:3000 
