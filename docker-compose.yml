@@ -51,6 +51,7 @@ services:
       - 0.0.0.0:3001:3000 
     volumes:
       - ./containers/flood/config:/home/download/.local
+      - ./containers/rtorrent/config:/home/download/rtorrent
     restart: unless-stopped
 
     # Autenticación activa. Pedirá configurar host 
