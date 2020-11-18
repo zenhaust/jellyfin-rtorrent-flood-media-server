@@ -7,7 +7,7 @@ system.daemon.set = true
 #network.scgi.open_local = (cat,(session.path),rpc.socket)
 network.scgi.open_local = /home/rtorrent/rpc.socket
 #execute.nothrow = chmod,770,(cat,(session.path),rpc.socket)
-execute.nothrow = chmod,770,/home/rtorrent/rpc.socket
+execute.nothrow = chmod,777,/home/rtorrent/rpc.socket
 
 #INET socket
 #network.scgi.open_port = 0.0.0.0:16891
