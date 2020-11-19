@@ -120,17 +120,38 @@ datos de configuración y funcionamiento de Flood.
 
 O lo que es lo mismo, los datos de conexión a la interfaz no son persistentes.
 
-La imagen de Flood utilizada crea un usuario con UID 1001. El directorio
+La imagen de Flood utilizada crea un usuario con UID 1100. El directorio
 ha de tener privilegios de escritura para dicho UID. 
 
 El log del contenedor mostrará el problema.
+
+```bash 
+    find containers/flood/* -type d -exec chmod 777 {} \;
+    find containers/flood/* -type f -exec chmod 666 {} \;
+``` 
+En otro caso lo normal será modificar el argumento UGID en 
+[docker-compose.yml](docker-compose.yml) para que ajuste a un usuario del sistema.
+
+**NOTA:** No pueden uilizarse los UGID 1000 y 1001. 
+
 
 ### No se escribe nada en el directorio config de rTorrent
 
 Se trata del mismo problema que en el caso anterior. 
 
-Por defecto la imagen se construye con UID / GID 1000. 
+Por defecto la imagen se construye con UID / GID 1100. 
 Ver [Dockerfile.rtorrent](containers/rtorrent/Dockerfile.rtorrent#L3).
 
+Para entornos controlados, se puede salir rápido del paso otorgando privilegios 
+de lectura / escritura para todo el mundo.
 
+```bash 
+    find containers/rtorrent/* -type d -exec chmod 777 {} \;
+    find containers/rtorrent/* -type f -exec chmod 666 {} \;
+``` 
+
+En otro caso lo normal será modificar el argumento UGID en 
+[docker-compose.yml](docker-compose.yml) para que ajuste a un usuario del sistema.
+
+**NOTA:** No pueden uilizarse los UGID 1000 y 1001. 
 

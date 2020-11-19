@@ -10,8 +10,8 @@ media/IPTV/*
 !media/Unclassified/loading/.gitkeep
 !media/Unclassified/finished/.gitkeep
 !media/IPTV/.gitkeep
-containers/flood/data
-containers/flood/config
+containers/flood/config/db/*
+!containers/flood/config/db/.gitkeep
 containers/jellyfin/config/*
 containers/jellyfin/config/.gitkeep
 containers/rtorrent/config/.bash_history
@@ -23,15 +23,21 @@ containers/rtorrent/config/rtorrent/download/*
 containers/rtorrent/config/rtorrent/done/*
 containers/rtorrent/config/.local
 containers/rtorrent/config/.npm
+
 !containers/rtorrent/config/rtorrent/session/.gitkeep
 !containers/rtorrent/config/rtorrent/dht_session/.gitkeep
 !containers/rtorrent/config/rtorrent/watch/.gitkeep
 !containers/rtorrent/config/rtorrent/download/.gitkeep
 !containers/rtorrent/config/rtorrent/done/.gitkeep
+
 containers/rtorrent/torrents/*
 !containers/rtorrent/torrents/.gitkeep
-!containers/flood/.gitkeep
+containers/rtorrent/sock/*
+!containers/rtorrent/sock/.gitkeep
+
+
 */**/.swp
 *.swp
+.plex-user-token
 
 

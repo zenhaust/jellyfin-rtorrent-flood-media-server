@@ -4,8 +4,8 @@ system.daemon.set = true
 
 ## control via XMLRPC sockets
 #Local UNIX socket
-#network.scgi.open_local = (cat,(session.path),rpc.socket)
-#execute.nothrow = chmod,770,(cat,(session.path),rpc.socket)
+network.scgi.open_local = /tmp/rtsock/rpc.socket
+execute.nothrow = chmod,770,/tmp/rtsock/rpc.socket
 
 #INET socket
-network.scgi.open_port = 0.0.0.0:16891
+#network.scgi.open_port = 0.0.0.0:16891

@@ -14,19 +14,21 @@ services:
       - ./media/Musica:/data/music
       - ./media/Cine:/data/movies
       - ./media/IPTV:/data/iptv
-      - /opt/vc/lib:/opt/vc/lib #optional
+#      - /opt/vc/lib:/opt/vc/lib #optional
     ports:
       - 8096:8096
       - 8920:8920 #optional
-    devices:
-      - /dev/dri:/dev/dri #optional
+        #    devices:
+        #      - /dev/dri:/dev/dri #optional
     restart: unless-stopped
 
   rtorrent:
-    image: debian-rtorrent
+    image: zenhaust/rtorrent
     build:
       context: ./containers/rtorrent
-      dockerfile: Dockerfile.rtorrent
+      dockerfile: Dockerfile
+      args:
+          UGID: 1100
     container_name: media-system-rtorrent
     ports:
       - 0.0.0.0:6881:6881 
@@ -34,6 +36,7 @@ services:
       - 0.0.0.0:50000:50000
     volumes:
       - ./containers/rtorrent/config:/home/rtorrent
+      - ./containers/rtorrent/sock:/tmp/rtsock
       - ./containers/rtorrent/torrents:/home/rtorrent/rtorrent/watch/start
       - ./media/Unclassified/loading:/home/rtorrent/rtorrent/download
       - ./media/Unclassified/finished:/home/rtorrent/rtorrent/done
@@ -45,16 +48,22 @@ services:
       - media-sys
 
   flood:
-    image: jesec/flood
+    image: zenhaust/flood
+    build:
+      context: ./containers/flood
+      dockerfile: Dockerfile
+      args:
+          UGID: 1100
     container_name: media-system-flood
     ports:
       - 0.0.0.0:3001:3000 
     volumes:
-      - ./containers/flood/config:/home/download/.local
+      - ./containers/flood/config/db:/usr/src/app/server/db
+      - ./containers/rtorrent/sock:/home/flood/rtsock
     restart: unless-stopped
 
     # Autenticación activa. Pedirá configurar host 
-    entrypoint: ["flood", "--host=0.0.0.0"] 
+    #entrypoint: ["npm", "run", "start"] 
     # En entornos controlados, SIN autenticación.
     #entrypoint: ["flood", "--host=0.0.0.0","--rthost=media-system-rtorrent", "--rtport=16891", "-n"]
 
