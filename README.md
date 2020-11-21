@@ -24,10 +24,6 @@ Los puertos de los distintos elementos pueden modificarse en el propio
 [docker-compose.yml](docker-compose.yml) que levanta el sistema.
 
 
-**NOTA:** rTorrent admite solicitudes XML-RPC en el puerto 16891. El puerto no está abierto al 
-exterior de la red declarada en [docker-compose.yml](docker-compose.yml).
-
-
 ## Sobre los servicios
 
 ### Jellyfin
@@ -46,8 +42,25 @@ a rTorrent desde Flood.
 El servicio inicia con gestión de usuarios por defecto. Se solicitará autenticación, y 
 configuración de host (nombre de contenedor) y puerto de rTorrent.
 
+#### Altarnativas de configuración para XML-RPC.
+
+rTorrent permite recibir solicitudes XML-RPC a través de dos mecanismos.
+
+##### Unix Socket
+
+
+rTorrent crea un socket para escuchar las solicitudes, y Flood envía las solicitudes a través 
+de dicho socket.
+
+Flood tendrá accesible el socket creado por rTorrent en la ruta **/home/flood/rtsock/rpc.socket**.
+
+##### TCP
+
+En este caso, Flood necesitará el host que corre rTorrent, y el puerto que admite solicitudes XML-RPC.
+
+
 * **host:** Configurado en [docker-compose.yml](docker-compose.yml#L30): media-system-rtorrent
-* **port:** Expuesto en [Dockerfile.rtorrent](containers/rtorrent/Dockerfile.rtorrent#L94): 16891
+* **port:** Expuesto en [Dockerfile](containers/rtorrent/Dockerfile#L94): 16891
 
 Existe la posibilidad de excluir el mecanismo de autenticación, modificando el entrypoint.
 
@@ -60,6 +73,14 @@ Existe la posibilidad de excluir el mecanismo de autenticación, modificando el 
     ...
 ``` 
 
+**NOTA:** deben cuidarse con atención los privilegios con los que cuentan los usuario que corren los 
+procesos de rTorrent y Flood. Esta opción debe activarse únicamente en entornos
+controlados, puesto que a través de este método podría producirse un **escalado de privilegios**.
+
+La configuración XML-RPC puede cambiarse en 
+[containers/rtorrent/config/rtorrent/config.d/05-xmlrpc.rc](containers/rtorrent/config/rtorrent/config.d/05-xmlrpc.rc)
+
+
 ## Estructura de directorios
 
 ```bash
@@ -70,7 +91,7 @@ Existe la posibilidad de excluir el mecanismo de autenticación, modificando el 
 │   ├── jellyfin
 │   │   └── config
 │   └── rtorrent
-│       ├── Dockerfile.rtorrent
+│       ├── Dockerfile
 │       ├── config
 │       └── torrents
 ├── docker-compose.yml
@@ -88,9 +109,9 @@ Existe la posibilidad de excluir el mecanismo de autenticación, modificando el 
 
 Aquí podemos poner los \*.torrent, e inmediatamente comienzan a descargarse.
 
-Mientras se descargan se ubican en media/Unclassified/loading.
+Mientras se descargan se ubican en **media/Unclassified/loading**.
 
-Cuando terminan van a parar a media/Unclassified/finished.
+Cuando terminan van a parar a **media/Unclassified/finished**.
 
 Por último, tu decides a que directorio de media quieres que vayan
 los archivos descargados.
@@ -140,7 +161,7 @@ En otro caso lo normal será modificar el argumento UGID en
 Se trata del mismo problema que en el caso anterior. 
 
 Por defecto la imagen se construye con UID / GID 1100. 
-Ver [Dockerfile.rtorrent](containers/rtorrent/Dockerfile.rtorrent#L3).
+Ver [Dockerfile](containers/rtorrent/Dockerfile#L3).
 
 Para entornos controlados, se puede salir rápido del paso otorgando privilegios 
 de lectura / escritura para todo el mundo.
