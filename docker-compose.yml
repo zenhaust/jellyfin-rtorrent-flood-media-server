@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   jellyfin:
-    image: linuxserver/jellyfin
+    image: linuxserver/jellyfin:10.7.1-1-ls103
     container_name: media-system-jellyfin
     environment:
       - PUID=1000
@@ -61,6 +61,12 @@ services:
       - ./containers/flood/config/db:/usr/src/app/server/db
       - ./containers/rtorrent/sock:/home/flood/rtsock
     restart: unless-stopped
+
+    # Autenticación activa. Pedirá configurar host 
+    #entrypoint: ["npm", "run", "start"] 
+    # En entornos controlados, SIN autenticación.
+    #entrypoint: ["flood", "--host=0.0.0.0","--rthost=media-system-rtorrent", "--rtport=16891", "-n"]
+
     networks:
       - media-sys
 
