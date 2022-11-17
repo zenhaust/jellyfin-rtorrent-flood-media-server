@@ -30,6 +30,7 @@ services:
       args:
           UGID: 1100
     container_name: media-system-rtorrent
+    hostname: rtorrent.media-sys
     ports:
       - 0.0.0.0:6881:6881 
       - 0.0.0.0:6881:6881/udp 
