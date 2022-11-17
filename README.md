@@ -59,8 +59,8 @@ Flood tendrá accesible el socket creado por rTorrent en la ruta **/home/flood/r
 En este caso, Flood necesitará el host que corre rTorrent, y el puerto que admite solicitudes XML-RPC.
 
 
-* **host:** Configurado en [docker-compose.yml](docker-compose.yml#L33): media-system-rtorrent
-* **port:** Expuesto en [Dockerfile](containers/rtorrent/Dockerfile#L94): 16891
+* **host:** Configurado en [docker-compose.yml](docker-compose.yml#L33): por defecto **rtorrent.media-sys**
+* **port:** Expuesto en [Dockerfile](containers/rtorrent/Dockerfile#L94): por defecto **16891**
 
 Existe la posibilidad de excluir el mecanismo de autenticación, modificando el entrypoint.
 
