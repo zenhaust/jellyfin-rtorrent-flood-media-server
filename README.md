@@ -146,6 +146,8 @@ ha de tener privilegios de escritura para dicho UID.
 
 El log del contenedor mostrará el problema.
 
+Fix:
+
 ```bash 
     find containers/flood/* -type d -exec chmod 777 {} \;
     find containers/flood/* -type f -exec chmod 666 {} \;
@@ -165,6 +167,8 @@ Ver [Dockerfile](containers/rtorrent/Dockerfile#L3).
 
 Para entornos controlados, se puede salir rápido del paso otorgando privilegios 
 de lectura / escritura para todo el mundo.
+
+Fix:
 
 ```bash 
     find containers/rtorrent/* -type d -exec chmod 777 {} \;
